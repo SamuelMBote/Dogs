@@ -20,3 +20,12 @@ export function USER_GET(token: string) {
     },
   };
 }
+export function TOKEN_VALIDADE_POST(token: string) {
+  return {
+    url: API_URL + '/jwt-auth/v1/token/validate',
+    options: {
+      method: 'POST',
+      headers: {Authorization: 'Bearer ' + token},
+    },
+  };
+}
