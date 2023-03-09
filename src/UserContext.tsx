@@ -2,16 +2,28 @@ import React from 'react';
 import {useNavigate} from 'react-router-dom';
 import {TOKEN_POST, TOKEN_VALIDADE_POST, USER_GET} from './api/Api';
 
-export const UserContext = React.createContext<{[key: string]: any}>({
-  data: {username: ''},
+export const UserContext = React.createContext<{
+  data: {[key: string]: any} | null;
+  login: boolean;
+  loading: boolean;
+  error: string | null;
+  userLogin: ((username: string, password: string) => Promise<void>) | null;
+  userLogout: (() => Promise<void>) | null;
+}>({
+  data: null,
+  login: false,
+  loading: false,
+  error: null,
+  userLogin: null,
+  userLogout: null,
 });
+
 export const UserStorage = ({children}: {children: JSX.Element[]}) => {
   const [data, setData] = React.useState(null);
   const [login, setLogin] = React.useState<boolean>(false);
   const [loading, setLoading] = React.useState<boolean>(false);
   const [error, setError] = React.useState<string | null>(null);
   const navigate = useNavigate();
-
   const userLogout = React.useCallback(
     async function () {
       setData(null);
@@ -19,7 +31,7 @@ export const UserStorage = ({children}: {children: JSX.Element[]}) => {
       setLoading(false);
       setLogin(false);
       window.localStorage.removeItem('token');
-      navigate('/');
+      navigate('/login');
     },
     [navigate],
   );
@@ -40,6 +52,8 @@ export const UserStorage = ({children}: {children: JSX.Element[]}) => {
         } finally {
           setLoading(false);
         }
+      } else {
+        setLogin(false);
       }
     }
     autoLogin();
@@ -62,7 +76,7 @@ export const UserStorage = ({children}: {children: JSX.Element[]}) => {
       const {token} = await tokenRes.json();
       window.localStorage.setItem('token', token);
       await getUser(token);
-      navigate('/');
+      navigate('/conta');
     } catch (error) {
       if (error instanceof Error) {
         setError(error.message);

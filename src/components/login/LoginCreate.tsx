@@ -23,7 +23,7 @@ const LoginCreate = () => {
       password: password.value,
     });
     const {response} = await request(url, options);
-    if (response?.ok) userLogin(username.value, password.value);
+    if (response?.ok) userLogin && userLogin(username.value, password.value);
   }
   return (
     <div className="animeLeft">
