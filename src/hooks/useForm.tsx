@@ -4,6 +4,11 @@ const validacao: {[key: string]: {regex: RegExp; message: string}} = {
     regex: /[^\s@]+@[^\s@]+\.[^\s@]+/,
     message: 'Preencha um Email válido',
   },
+  password: {
+    regex: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/,
+    message:
+      'A senha precisa ter caracter maiúsculo, minúsculo e digito. Com no mínimo 8 caracteres',
+  },
 };
 const useForm = (type?: string | false) => {
   const [value, setValue] = React.useState('');
