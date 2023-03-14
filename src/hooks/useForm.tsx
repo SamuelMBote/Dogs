@@ -1,4 +1,7 @@
 import React from 'react';
+
+type Validador = 'email' | 'number' | 'password' | false;
+
 const validacao: {[key: string]: {regex: RegExp; message: string}} = {
   email: {
     regex: /[^\s@]+@[^\s@]+\.[^\s@]+/,
@@ -9,8 +12,9 @@ const validacao: {[key: string]: {regex: RegExp; message: string}} = {
     message:
       'A senha precisa ter caracter maiúsculo, minúsculo e digito. Com no mínimo 8 caracteres',
   },
+  number: {regex: /^\d+$/, message: 'Utilize números apenas'},
 };
-const useForm = (type?: string | false) => {
+const useForm = (type?: Validador) => {
   const [value, setValue] = React.useState('');
   const [error, setError] = React.useState<string | null>(null);
 
