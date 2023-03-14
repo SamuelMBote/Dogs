@@ -10,7 +10,7 @@ import LoginPasswordReset from './LoginPasswordReset';
 const Login = () => {
   const {login} = React.useContext(UserContext);
 
-  if (login === true) return <Navigate to="/" />;
+  if (login === true) return <Navigate to="/conta" />;
 
   return (
     <section className={style.login}>
