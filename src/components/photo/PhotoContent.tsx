@@ -1,9 +1,14 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
+import {IComment} from '../../interfaces/IComments';
 import IPhoto from '../../interfaces/IPhoto';
 import PhotoComments from './PhotoComments';
 import style from './PhotoContent.module.css';
-const PhotoContent = ({data}: {data: {photo: IPhoto; comments: string[]}}) => {
+const PhotoContent = ({
+  data,
+}: {
+  data: {photo: IPhoto; comments: IComment[]};
+}) => {
   const {photo, comments} = data;
   return (
     <div className={style.photo}>
