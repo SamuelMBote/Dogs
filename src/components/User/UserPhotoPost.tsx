@@ -7,15 +7,18 @@ import Button from '../forms/Button';
 import Input from '../forms/Input';
 import Erro from '../helper/Erro';
 import style from './UserPhotoPost.module.css';
-
+interface IImg {
+  raw: File | null;
+  preview: string | null;
+}
 const UserPhotoPost = () => {
   const nome = useForm();
   const peso = useForm('number');
   const idade = useForm('number');
-  const [img, setImg] = React.useState<{
-    raw: File | null;
-    preview: string | null;
-  }>({raw: null, preview: null});
+  const [img, setImg]: [
+    IImg | null,
+    React.Dispatch<React.SetStateAction<IImg | null>>,
+  ] = React.useState<IImg | null>({raw: null, preview: null});
   const {data, error, loading, request} = useFetch();
   const navigate = useNavigate();
 
@@ -24,13 +27,14 @@ const UserPhotoPost = () => {
   }, [data, navigate]);
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    const formData = new FormData();
-    if (img.raw) formData.append('img', img.raw);
-    formData.append('nome', nome.value);
-    formData.append('peso', peso.value);
-    formData.append('idade', idade.value);
+    
+    const formData: FormData = new FormData();
+    if (img && img.raw) formData.append('img', img.raw);
+    if (nome) formData.append('nome', nome.value);
+    if (peso) formData.append('peso', peso.value);
+    if (idade) formData.append('idade', idade.value);
 
-    const token = window.localStorage.getItem('token');
+    const token: string | null = window.localStorage.getItem('token');
 
     try {
       if (token) {
@@ -45,7 +49,7 @@ const UserPhotoPost = () => {
       }
     }
   }
-  function handleImgChange(event: React.FormEvent<HTMLInputElement>) {
+  function handleImgChange(event: React.FormEvent<HTMLInputElement>): void {
     event.preventDefault();
     if (event && event.target instanceof HTMLInputElement) {
       if (event.target.files)
@@ -72,7 +76,7 @@ const UserPhotoPost = () => {
         <Erro error={error} />
       </form>
       <div>
-        {img.preview && (
+        {img && img.preview && (
           <div
             className={style.preview}
             style={{backgroundImage: `url(${img.preview})`}}

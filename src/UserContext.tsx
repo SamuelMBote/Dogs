@@ -1,6 +1,7 @@
 import React from 'react';
-import {useNavigate} from 'react-router-dom';
+import {NavigateFunction, useNavigate} from 'react-router-dom';
 import {TOKEN_POST, TOKEN_VALIDADE_POST, USER_GET} from './api/Api';
+import useFetch from './hooks/useFetch';
 
 export const UserContext = React.createContext<{
   data: {[key: string]: any} | null;
@@ -18,14 +19,35 @@ export const UserContext = React.createContext<{
   userLogout: null,
 });
 
-export const UserStorage = ({children}: {children: JSX.Element[]}) => {
-  const [data, setData] = React.useState(null);
-  const [login, setLogin] = React.useState<boolean>(false);
-  const [loading, setLoading] = React.useState<boolean>(false);
-  const [error, setError] = React.useState<string | null>(null);
-  const navigate = useNavigate();
-  const userLogout = React.useCallback(
-    async function () {
+export const UserStorage: ({
+  children,
+}: {
+  children: JSX.Element[];
+}) => JSX.Element = ({children}) => {
+  const [data, setData]: [any, React.Dispatch<React.SetStateAction<any>>] =
+    React.useState(null);
+
+  const [login, setLogin]: [
+    boolean,
+    React.Dispatch<React.SetStateAction<boolean>>,
+  ] = React.useState<boolean>(false);
+
+  const [loading, setLoading]: [
+    boolean,
+    React.Dispatch<React.SetStateAction<boolean>>,
+  ] = React.useState<boolean>(false);
+
+  const [error, setError]: [
+    string | null,
+    React.Dispatch<React.SetStateAction<string | null>>,
+  ] = React.useState<string | null>(null);
+
+  const navigate: NavigateFunction = useNavigate();
+
+  const {request} = useFetch();
+
+  const userLogout: () => Promise<void> = React.useCallback(
+    async function (): Promise<void> {
       setData(null);
       setError(null);
       setLoading(false);
@@ -35,9 +57,9 @@ export const UserStorage = ({children}: {children: JSX.Element[]}) => {
     },
     [navigate],
   );
-  React.useEffect(() => {
-    async function autoLogin() {
-      const token = window.localStorage.getItem('token');
+  React.useEffect((): void => {
+    async function autoLogin(): Promise<void> {
+      const token: string | null = window.localStorage.getItem('token');
       if (token) {
         try {
           setError(null);
@@ -58,24 +80,27 @@ export const UserStorage = ({children}: {children: JSX.Element[]}) => {
     }
     autoLogin();
   }, [userLogout]);
-  async function getUser(token: string) {
+  async function getUser(token: string): Promise<void> {
     const {url, options} = USER_GET(token);
-    const response = await fetch(url, options);
-    const json = await response.json();
+    const {response, json} = await request(url, options);
     setData(json);
     setLogin(true);
   }
 
-  async function userLogin(username: string, password: string) {
+  async function userLogin(username: string, password: string): Promise<void> {
     try {
       setError(null);
       setLoading(true);
       const {url, options} = TOKEN_POST({username, password});
-      const tokenRes = await fetch(url, options);
-      if (!tokenRes.ok) throw new Error(`Erro: Usuário Inválido`);
-      const {token} = await tokenRes.json();
+      const {response, json} = await request(url, options);
+      if (response && !response.ok) throw new Error(`Erro: Usuário Inválido`);
+
+      const {token} = json;
+
       window.localStorage.setItem('token', token);
+
       await getUser(token);
+
       navigate('/conta');
     } catch (error) {
       if (error instanceof Error) {

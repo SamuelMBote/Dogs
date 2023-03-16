@@ -1,5 +1,14 @@
 export const API_URL = 'https://dogsapi.origamid.dev/json';
-export function TOKEN_POST(body: {username: string; password: string}) {
+export function TOKEN_POST(body: {username: string; password: string}): {
+  url: string;
+  options: {
+    method: string;
+    headers: {
+      'Content-Type': string;
+    };
+    body: string;
+  };
+} {
   return {
     url: API_URL + '/jwt-auth/v1/token',
     options: {
@@ -11,7 +20,15 @@ export function TOKEN_POST(body: {username: string; password: string}) {
     },
   };
 }
-export function USER_GET(token: string) {
+export function USER_GET(token: string): {
+  url: string;
+  options: {
+    method: string;
+    headers: {
+      Authorization: string;
+    };
+  };
+} {
   return {
     url: API_URL + '/api/user',
     options: {
@@ -20,7 +37,15 @@ export function USER_GET(token: string) {
     },
   };
 }
-export function TOKEN_VALIDADE_POST(token: string) {
+export function TOKEN_VALIDADE_POST(token: string): {
+  url: string;
+  options: {
+    method: string;
+    headers: {
+      Authorization: string;
+    };
+  };
+} {
   return {
     url: API_URL + '/jwt-auth/v1/token/validate',
     options: {
@@ -33,7 +58,16 @@ export function USER_POST(body: {
   username: string;
   password: string;
   email: string;
-}) {
+}): {
+  url: string;
+  options: {
+    method: string;
+    headers: {
+      'Content-Type': string;
+    };
+    body: string;
+  };
+} {
   return {
     url: API_URL + '/api/user',
     options: {
@@ -43,7 +77,19 @@ export function USER_POST(body: {
     },
   };
 }
-export function PHOTO_POST(formData: FormData, token: string) {
+export function PHOTO_POST(
+  formData: FormData,
+  token: string,
+): {
+  url: string;
+  options: {
+    method: string;
+    headers: {
+      Authorization: string;
+    };
+    body: FormData;
+  };
+} {
   return {
     url: API_URL + '/api/photo',
     options: {
@@ -62,7 +108,13 @@ export function PHOTOS_GET({
   page: number;
   total: number;
   user: number;
-}) {
+}): {
+  url: string;
+  options: {
+    method: string;
+    cache: string;
+  };
+} {
   return {
     url: API_URL + `/api/photo/?_page=${page}&_total=${total}&_user=${user}`,
     options: {
@@ -71,7 +123,13 @@ export function PHOTOS_GET({
     },
   };
 }
-export function PHOTO_GET(id: number) {
+export function PHOTO_GET(id: number): {
+  url: string;
+  options: {
+    method: string;
+    cache: string;
+  };
+} {
   return {
     url: API_URL + `/api/photo/${id}`,
     options: {

@@ -1,6 +1,6 @@
 import React from 'react';
 import style from './Input.module.css';
-const Input = ({
+const Input: ({
   label,
   type,
   name,
@@ -13,11 +13,18 @@ const Input = ({
   type: string;
   name: string;
   value: string;
-  setValue: Function;
-  onChange: Function;
-  onBlur: Function;
+  setValue: React.Dispatch<React.SetStateAction<typeof value>>;
+  onChange:
+    | React.InputHTMLAttributes<HTMLInputElement>
+    | React.ChangeEventHandler<HTMLInputElement>
+    | undefined;
+  onBlur:
+    | React.DOMAttributes<HTMLInputElement>
+    | React.FocusEventHandler<HTMLInputElement>
+    | undefined;
+
   error: string | null;
-}) => {
+}) => JSX.Element = ({label, type, name, value, onChange, onBlur, error}) => {
   return (
     <div className={style.wrapper}>
       <label htmlFor={name} className={style.label}>
@@ -28,13 +35,15 @@ const Input = ({
         type={type}
         name={name}
         value={value}
-        onChange={(event: React.FocusEvent<HTMLInputElement>) => {
+        onChange={(event: React.FocusEvent<HTMLInputElement>): void => {
           if (onChange && onChange instanceof Function) {
             onChange(event);
           }
         }}
-        onBlur={(event: React.FocusEvent<HTMLInputElement>) => {
-          if (onBlur && onBlur instanceof Function) onBlur();
+        onBlur={(event: React.FocusEvent<HTMLInputElement>): void => {
+          if (onBlur && onBlur instanceof Function) {
+            onBlur(event);
+          }
         }}
         autoComplete={type === 'password' ? 'on' : 'off'}
       />

@@ -10,7 +10,10 @@ import useMedia from '../../hooks/useMedia';
 const UserHeaderNav = () => {
   const mobile = useMedia('(max-width: 40rem)');
   const {userLogout} = React.useContext(UserContext);
-  const [mobileMenu, setMobileMenu] = React.useState<boolean>(false);
+  const [mobileMenu, setMobileMenu]: [
+    boolean,
+    React.Dispatch<React.SetStateAction<boolean>>,
+  ] = React.useState<boolean>(false);
   const {pathname} = useLocation();
   React.useEffect(() => {
     setMobileMenu(false);

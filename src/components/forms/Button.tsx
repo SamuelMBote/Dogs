@@ -1,13 +1,13 @@
 import React from 'react';
 import style from './Button.module.css';
-const Button = ({
+const Button: ({
   children,
   disabled,
   ...props
 }: {
   children: string;
-  disabled?: boolean;
-}) => {
+  disabled?: boolean | undefined;
+}) => JSX.Element = ({children, disabled, ...props}) => {
   return (
     <button
       className={style.button}

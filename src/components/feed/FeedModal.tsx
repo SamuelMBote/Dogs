@@ -7,15 +7,15 @@ import Loading from '../helper/Loading';
 import PhotoContent from '../photo/PhotoContent';
 import style from './FeedModal.module.css';
 
-const FeedModal = ({
+const FeedModal: ({
   photo,
   setModalPhoto,
 }: {
   photo: IPhoto;
-  setModalPhoto: Function;
-}) => {
+  setModalPhoto: React.Dispatch<React.SetStateAction<IPhoto | null>>;
+}) => JSX.Element = ({photo, setModalPhoto}) => {
   const {data, error, loading, request} = useFetch();
-  React.useEffect(() => {
+  React.useEffect((): void => {
     const {url, options} = PHOTO_GET(photo.id);
     request(url, options);
   }, [photo, request]);
@@ -23,7 +23,7 @@ const FeedModal = ({
     event:
       | React.PointerEvent<HTMLDivElement>
       | React.MouseEvent<HTMLDivElement>,
-  ) {
+  ): void {
     if (event.target === event.currentTarget) {
       setModalPhoto(null);
     }

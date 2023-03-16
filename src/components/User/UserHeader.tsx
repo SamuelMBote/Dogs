@@ -2,11 +2,17 @@ import React from 'react';
 import UserHeaderNav from './UserHeaderNav';
 import style from './UserHeader.module.css';
 import {useLocation} from 'react-router-dom';
+import {Location} from 'history';
 const UserHeader = () => {
-  const [title, setTitle] = React.useState<string>('');
-  const location = useLocation();
+  const [title, setTitle]: [
+    string,
+    React.Dispatch<React.SetStateAction<string>>,
+  ] = React.useState<string>('');
+
+  const location: Location = useLocation();
+
   React.useEffect(() => {
-    const {pathname} = location;
+    const {pathname}: {pathname: string} = location;
     switch (pathname) {
       case '/conta/postar':
         setTitle('Poste Sua Foto');
