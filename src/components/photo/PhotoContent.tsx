@@ -3,6 +3,7 @@ import {Link} from 'react-router-dom';
 import {IComment} from '../../interfaces/IComments';
 import IPhoto from '../../interfaces/IPhoto';
 import {UserContext} from '../../UserContext';
+import Image from '../helper/Image';
 import PhotoComments from './PhotoComments';
 import style from './PhotoContent.module.css';
 import PhotoDelete from './PhotoDelete';
@@ -16,7 +17,7 @@ const PhotoContent = ({
   return (
     <div className={style.photo}>
       <div className={style.img}>
-        <img src={photo.src} alt={photo.title} />
+        <Image src={photo.src} alt={photo.title} />
       </div>
       <div className={style.details}>
         <div>
