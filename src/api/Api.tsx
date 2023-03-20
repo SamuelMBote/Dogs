@@ -166,3 +166,24 @@ export function COMMENT_POST(
     },
   };
 }
+
+export function PHOTO_DELETE(id: number): {
+  url: string;
+  options: {
+    method: string;
+
+    headers: {
+      Authorization: string;
+    };
+  };
+} {
+  return {
+    url: API_URL + `/api/photo/${id}`,
+    options: {
+      method: 'DELETE',
+      headers: {
+        Authorization: 'Bearer ' + window.localStorage.getItem('token'),
+      },
+    },
+  };
+}
