@@ -1,6 +1,5 @@
 import React from 'react';
 import Feed from './feed/Feed';
-import Loading from './helper/Loading';
 
 const Home = () => {
   return (

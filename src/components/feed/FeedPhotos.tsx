@@ -9,18 +9,34 @@ import FeedPhotosItem from './FeedPhotosItem';
 import style from './FeedPhotos.module.css';
 
 const FeedPhotos: ({
+  user,
+  page,
   setModalPhoto,
+  setInfinite,
 }: {
+  user: number;
+  page: number;
   setModalPhoto: React.Dispatch<React.SetStateAction<IPhoto | null>>;
-}) => JSX.Element | null = ({setModalPhoto}) => {
+  setInfinite: React.Dispatch<React.SetStateAction<boolean>>;
+}) => JSX.Element | null = ({user, page, setModalPhoto, setInfinite}) => {
   const {data, loading, error, request} = useFetch();
   React.useEffect(() => {
     async function fetchPhotos(): Promise<void> {
-      const {url, options} = PHOTOS_GET({page: 1, total: 6, user: 0});
+      const total = 3;
+      const {url, options} = PHOTOS_GET({page, total, user});
       const {response, json} = await request(url, options);
+      console.log(json);
+      if (
+        response &&
+        response.ok &&
+        json instanceof Array &&
+        json.length < total
+      ) {
+        setInfinite(false);
+      }
     }
     fetchPhotos();
-  }, [request]);
+  }, [request, user, page, setInfinite]);
   if (error) return <Erro error={error} />;
   if (loading) return <Loading />;
   if (data && data instanceof Array)
