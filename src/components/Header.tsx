@@ -5,7 +5,10 @@ import {ReactComponent as Dogs} from '../Assets/dogs.svg';
 import {UserContext} from '../UserContext';
 const Header = () => {
   const {data} = React.useContext(UserContext);
-
+  React.useEffect(() => Title, []);
+  const Title = React.useCallback(() => {
+    document.title = 'Dogs | Origamid Project';
+  }, []);
   return (
     <header className={style.header}>
       <nav className={`${style.nav} container`}>
