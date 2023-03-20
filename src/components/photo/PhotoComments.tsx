@@ -9,11 +9,24 @@ const PhotoComments = (commentsProps: IComments) => {
     IComment[],
     React.Dispatch<React.SetStateAction<IComment[]>>,
   ] = React.useState<IComment[]>(() => commentsProps.comments);
+
+  const commentsSection: React.RefObject<HTMLUListElement> =
+    React.useRef<HTMLUListElement>(null);
+
   const {login} = React.useContext(UserContext);
+
+  React.useEffect(() => {
+    if (
+      commentsSection &&
+      commentsSection.current instanceof HTMLUListElement
+    ) {
+      commentsSection.current.scrollTop = commentsSection.current.scrollHeight;
+    }
+  }, [comments]);
 
   return (
     <>
-      <ul className={style.comments}>
+      <ul ref={commentsSection} className={style.comments}>
         {comments &&
           comments.map((comment) => {
             return (

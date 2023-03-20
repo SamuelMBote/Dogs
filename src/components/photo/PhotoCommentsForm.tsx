@@ -3,7 +3,7 @@ import {COMMENT_POST} from '../../api/Api';
 import {ReactComponent as Enviar} from '../../Assets/enviar.svg';
 import useFetch from '../../hooks/useFetch';
 import {IComment} from '../../interfaces/IComments';
-
+import style from './PhotoCommentsForm.module.css';
 const PhotoCommentsForm = ({
   id,
   setComments,
@@ -38,8 +38,9 @@ const PhotoCommentsForm = ({
     }
   }
   return (
-    <form action="" onSubmit={handleSubmit}>
+    <form className={style.form} action="" onSubmit={handleSubmit}>
       <textarea
+        className={style.textarea}
         value={comment}
         onChange={({target}: {target: EventTarget & HTMLTextAreaElement}) => {
           if (target && target.value.length) setComment(target.value);
@@ -47,10 +48,8 @@ const PhotoCommentsForm = ({
         name="comment"
         id="comment"
         placeholder="Comente..."
-        cols={30}
-        rows={10}
       ></textarea>
-      <button>
+      <button className={style.button}>
         <Enviar />
       </button>
     </form>
