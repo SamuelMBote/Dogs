@@ -26,7 +26,12 @@ const PhotoComments = (commentsProps: IComments) => {
 
   return (
     <>
-      <ul ref={commentsSection} className={style.comments}>
+      <ul
+        ref={commentsSection}
+        className={`${style.comments} ${
+          commentsProps.single ? style.single : ''
+        }`}
+      >
         {comments &&
           comments.map((comment) => {
             return (
@@ -38,7 +43,11 @@ const PhotoComments = (commentsProps: IComments) => {
           })}
       </ul>
       {login && (
-        <PhotoCommentsForm id={commentsProps.id} setComments={setComments} />
+        <PhotoCommentsForm
+          single={commentsProps.single}
+          id={commentsProps.id}
+          setComments={setComments}
+        />
       )}
     </>
   );

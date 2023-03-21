@@ -4,13 +4,15 @@ import {ReactComponent as Enviar} from '../../Assets/enviar.svg';
 import useFetch from '../../hooks/useFetch';
 import {IComment} from '../../interfaces/IComments';
 import style from './PhotoCommentsForm.module.css';
-const PhotoCommentsForm = ({
+const PhotoCommentsForm: ({
   id,
   setComments,
+  single,
 }: {
   id: number;
   setComments: React.Dispatch<React.SetStateAction<IComment[]>>;
-}) => {
+  single: boolean;
+}) => JSX.Element = ({id, setComments, single}) => {
   const [comment, setComment]: [
     string,
     React.Dispatch<React.SetStateAction<string>>,
@@ -38,7 +40,10 @@ const PhotoCommentsForm = ({
     }
   }
   return (
-    <form className={style.form} action="" onSubmit={handleSubmit}>
+    <form
+      className={`${style.form} ${single ? style.single : ''}`}
+      onSubmit={handleSubmit}
+    >
       <textarea
         className={style.textarea}
         value={comment}

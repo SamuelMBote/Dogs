@@ -7,15 +7,20 @@ import Image from '../helper/Image';
 import PhotoComments from './PhotoComments';
 import style from './PhotoContent.module.css';
 import PhotoDelete from './PhotoDelete';
-const PhotoContent = ({
+const PhotoContent: ({
   data,
+  single,
 }: {
-  data: {photo: IPhoto; comments: IComment[]};
-}) => {
+  data: {
+    photo: IPhoto;
+    comments: IComment[];
+  };
+  single: boolean;
+}) => JSX.Element = ({data, single}) => {
   const {photo, comments} = data;
   const user = React.useContext(UserContext);
   return (
-    <div className={style.photo}>
+    <div className={`${style.photo} ${single ? style.single : ''}`}>
       <div className={style.img}>
         <Image src={photo.src} alt={photo.title} />
       </div>
@@ -42,7 +47,7 @@ const PhotoContent = ({
           </ul>
         </div>
       </div>
-      <PhotoComments id={photo.id} comments={comments} />
+      <PhotoComments single={single} id={photo.id} comments={comments} />
     </div>
   );
 };

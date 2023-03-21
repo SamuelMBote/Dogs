@@ -1,6 +1,7 @@
 export interface IComments {
   id: number;
   comments: IComment[];
+  single: boolean;
 }
 export interface IComment {
   comment_ID: string;

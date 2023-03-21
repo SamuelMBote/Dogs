@@ -32,7 +32,7 @@ const FeedModal: ({
     <div className={style.modal} onClick={handleOutsideClick}>
       {error && <Erro error={error} />}
       {loading && <Loading />}
-      {data && <PhotoContent data={data} />}
+      {data && <PhotoContent single={false} data={data} />}
     </div>
   );
 };
