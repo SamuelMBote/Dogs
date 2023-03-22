@@ -7,7 +7,7 @@ const UserProfile = () => {
   const {user} = useParams();
 
   return (
-    <div>
+    <div className="container mainContainer">
       <h1 className="title">{user}</h1>
 
       {user && <Feed user={user} />}
