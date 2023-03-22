@@ -14,7 +14,7 @@ const FeedPhotos: ({
   setModalPhoto,
   setInfinite,
 }: {
-  user: number;
+  user: string;
   page: number;
   setModalPhoto: React.Dispatch<React.SetStateAction<IPhoto | null>>;
   setInfinite: React.Dispatch<React.SetStateAction<boolean>>;
@@ -25,7 +25,6 @@ const FeedPhotos: ({
       const total = 3;
       const {url, options} = PHOTOS_GET({page, total, user});
       const {response, json} = await request(url, options);
-      console.log(json);
       if (
         response &&
         response.ok &&

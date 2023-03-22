@@ -19,6 +19,7 @@ const PhotoContent: ({
 }) => JSX.Element = ({data, single}) => {
   const {photo, comments} = data;
   const user = React.useContext(UserContext);
+
   return (
     <div className={`${style.photo} ${single ? style.single : ''}`}>
       <div className={style.img}>

@@ -107,7 +107,7 @@ export function PHOTOS_GET({
 }: {
   page: number;
   total: number;
-  user: number;
+  user: string;
 }): {
   url: string;
   options: {

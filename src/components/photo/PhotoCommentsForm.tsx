@@ -18,7 +18,7 @@ const PhotoCommentsForm: ({
     React.Dispatch<React.SetStateAction<string>>,
   ] = React.useState<string>('');
 
-  const {request, error} = useFetch();
+  const {request} = useFetch();
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
