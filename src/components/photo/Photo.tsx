@@ -3,6 +3,7 @@ import {useParams} from 'react-router-dom';
 import {PHOTO_GET} from '../../api/Api';
 import useFetch from '../../hooks/useFetch';
 import Erro from '../helper/Erro';
+import Head from '../helper/Head';
 import Loading from '../helper/Loading';
 import PhotoContent from './PhotoContent';
 
@@ -18,6 +19,17 @@ const Photo = () => {
   if (data) {
     return (
       <section className={'container mainContainer'}>
+        <Head
+          title={
+            data &&
+            typeof data === 'object' &&
+            'photo' in data &&
+            typeof data.photo === 'object' &&
+            'title' in data.photo &&
+            data.photo.title
+          }
+          description={''}
+        />
         <PhotoContent data={data} single={true} />
       </section>
     );

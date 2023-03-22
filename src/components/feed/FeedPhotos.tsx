@@ -14,7 +14,7 @@ const FeedPhotos: ({
   setModalPhoto,
   setInfinite,
 }: {
-  user: string;
+  user: string | number;
   page: number;
   setModalPhoto: React.Dispatch<React.SetStateAction<IPhoto | null>>;
   setInfinite: React.Dispatch<React.SetStateAction<boolean>>;

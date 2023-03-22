@@ -3,7 +3,9 @@ import IPhoto from '../../interfaces/IPhoto';
 import FeedModal from './FeedModal';
 import FeedPhotos from './FeedPhotos';
 
-const Feed = ({user}: {user: string | null}): JSX.Element => {
+const Feed: ({user}: {user: string | number | null}) => JSX.Element = ({
+  user,
+}): JSX.Element => {
   const [modalPhoto, setModalPhoto]: [
     IPhoto | null,
     React.Dispatch<React.SetStateAction<IPhoto | null>>,
@@ -49,7 +51,7 @@ const Feed = ({user}: {user: string | null}): JSX.Element => {
       {pages.map((page) => (
         <FeedPhotos
           key={page}
-          user={user ? user : '0'}
+          user={user ? user : 0}
           page={page}
           setModalPhoto={setModalPhoto}
           setInfinite={setInfinite}

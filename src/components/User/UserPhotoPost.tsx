@@ -6,6 +6,7 @@ import useForm from '../../hooks/useForm';
 import Button from '../forms/Button';
 import Input from '../forms/Input';
 import Erro from '../helper/Erro';
+import Head from '../helper/Head';
 import style from './UserPhotoPost.module.css';
 interface IImg {
   raw: File | null;
@@ -27,7 +28,7 @@ const UserPhotoPost = () => {
   }, [data, navigate]);
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    
+
     const formData: FormData = new FormData();
     if (img && img.raw) formData.append('img', img.raw);
     if (nome) formData.append('nome', nome.value);
@@ -63,6 +64,7 @@ const UserPhotoPost = () => {
 
   return (
     <section className={`${style.photoPost} animeLeft`}>
+      <Head title={'Poste sua Foto'} description={''} />
       <form onSubmit={handleSubmit}>
         <Input label="Nome" type="text" name="nome" {...nome} />
         <Input label="Peso" type="number" name="peso" {...peso} />

@@ -2,7 +2,7 @@ export const API_URL = 'https://dogsapi.origamid.dev/json';
 export function TOKEN_POST(body: {username: string; password: string}): {
   url: string;
   options: {
-    method: string;
+    method: 'POST';
     headers: {
       'Content-Type': string;
     };
@@ -23,7 +23,7 @@ export function TOKEN_POST(body: {username: string; password: string}): {
 export function USER_GET(token: string): {
   url: string;
   options: {
-    method: string;
+    method: 'GET';
     headers: {
       Authorization: string;
     };
@@ -40,7 +40,7 @@ export function USER_GET(token: string): {
 export function TOKEN_VALIDADE_POST(token: string): {
   url: string;
   options: {
-    method: string;
+    method: 'POST';
     headers: {
       Authorization: string;
     };
@@ -61,7 +61,7 @@ export function USER_POST(body: {
 }): {
   url: string;
   options: {
-    method: string;
+    method: 'POST';
     headers: {
       'Content-Type': string;
     };
@@ -83,7 +83,7 @@ export function PHOTO_POST(
 ): {
   url: string;
   options: {
-    method: string;
+    method: 'POST';
     headers: {
       Authorization: string;
     };
@@ -107,11 +107,11 @@ export function PHOTOS_GET({
 }: {
   page: number;
   total: number;
-  user: string;
+  user: string | number;
 }): {
   url: string;
   options: {
-    method: string;
+    method: 'GET';
     cache: string;
   };
 } {
@@ -126,7 +126,7 @@ export function PHOTOS_GET({
 export function PHOTO_GET(id: number): {
   url: string;
   options: {
-    method: string;
+    method: 'GET';
     cache: string;
   };
 } {
@@ -145,8 +145,7 @@ export function COMMENT_POST(
 ): {
   url: string;
   options: {
-    method: string;
-
+    method: 'POST';
     headers: {
       'Content-Type': string;
       Authorization: string;
@@ -170,8 +169,7 @@ export function COMMENT_POST(
 export function PHOTO_DELETE(id: number): {
   url: string;
   options: {
-    method: string;
-
+    method: 'DELETE';
     headers: {
       Authorization: string;
     };
@@ -184,6 +182,38 @@ export function PHOTO_DELETE(id: number): {
       headers: {
         Authorization: 'Bearer ' + window.localStorage.getItem('token'),
       },
+    },
+  };
+}
+
+export function PASSWORD_LOST(body: {login: string; url: string}): {
+  url: string;
+  options: {method: 'POST'; headers: {'Content-Type': string}; body: string};
+} {
+  return {
+    url: API_URL + '/api/password/lost',
+    options: {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(body),
+    },
+  };
+}
+
+export function PASSWORD_RESET(body: {
+  login: string;
+  key: string;
+  password: string;
+}): {
+  url: string;
+  options: {method: 'POST'; headers: {'Content-Type': string}; body: string};
+} {
+  return {
+    url: API_URL + '/api/password/reset',
+    options: {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(body),
     },
   };
 }
