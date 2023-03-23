@@ -20,7 +20,7 @@ const Feed: ({user}: {user: string | number | null}) => JSX.Element = ({
     boolean,
     React.Dispatch<React.SetStateAction<boolean>>,
   ] = React.useState<boolean>(true);
-  console.log('user', user);
+
   React.useEffect(() => {
     let wait: boolean = false;
     function infiniteScroll() {
